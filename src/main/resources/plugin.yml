@@ -1,0 +1,19 @@
+name: ${name}
+version: ${version}
+main: ${groupId}.${artifactId}.${name}Plugin
+description: ${description}
+api-version: 1.18
+author: ${author}
+softdepend: WorldEdit
+commands:
+    thewalls:
+        description: The base command for TheWalls PVP!
+        usage: /<command> <subcommand>
+        aliases: [tw]
+permissions:
+    thewalls.player:
+        description: Allows access to all the player commands
+        default: true
+    thewalls.admin:
+        description: Allows access to all the admin commands
+        default: op
