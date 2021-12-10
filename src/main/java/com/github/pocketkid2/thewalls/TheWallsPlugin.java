@@ -2,14 +2,19 @@ package com.github.pocketkid2.thewalls;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.github.pocketkid2.thewalls.commands.TheWallsBaseCommand;
+
 public class TheWallsPlugin extends JavaPlugin {
 
 	private boolean debug;
+
+	private GameManager gm;
 
 	@Override
 	public void onEnable() {
 		saveDefaultConfig();
 		getConfig().getBoolean("debug", false);
+		getCommand("thewalls").setExecutor(new TheWallsBaseCommand(this));
 		log("Enabled!");
 	}
 
@@ -34,5 +39,9 @@ public class TheWallsPlugin extends JavaPlugin {
 		if (debug) {
 			getLogger().info("[DEBUG] " + message);
 		}
+	}
+
+	public GameManager getGM() {
+		return gm;
 	}
 }
