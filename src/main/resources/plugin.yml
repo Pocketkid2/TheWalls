@@ -4,7 +4,7 @@ main: ${groupId}.${artifactId}.${name}Plugin
 description: ${description}
 api-version: 1.18
 author: ${author}
-softdepend: WorldEdit
+depend: [WorldEdit]
 commands:
     thewalls:
         description: The base command for TheWalls PVP!
