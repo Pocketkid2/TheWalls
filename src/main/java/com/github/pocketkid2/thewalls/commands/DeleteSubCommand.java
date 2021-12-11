@@ -51,7 +51,7 @@ public class DeleteSubCommand extends TheWallsSubCommand {
 		for (Arena a : plugin.getGM().getArenas()) {
 			if (a.getName().equalsIgnoreCase(args[0])) {
 				plugin.getGM().removeArena(args[0]);
-				sender.sendMessage(ChatColor.AQUA + "Deleted arena " + ChatColor.GREEN + args[0]);
+				sender.sendMessage(ChatColor.AQUA + "Deleted arena " + ChatColor.GREEN + a.getName());
 				return;
 			}
 		}
