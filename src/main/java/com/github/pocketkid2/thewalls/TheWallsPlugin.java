@@ -7,11 +7,16 @@ import org.bukkit.Location;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.github.pocketkid2.thewalls.commands.TheWallsBaseCommand;
 
 public class TheWallsPlugin extends JavaPlugin {
+
+	static {
+		ConfigurationSerialization.registerClass(Arena.class);
+	}
 
 	private boolean debug;
 
@@ -68,6 +73,10 @@ public class TheWallsPlugin extends JavaPlugin {
 		} catch (IOException | InvalidConfigurationException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public FileConfiguration getDataConfig() {
+		return dataConfig;
 	}
 
 	public void log(String message) {

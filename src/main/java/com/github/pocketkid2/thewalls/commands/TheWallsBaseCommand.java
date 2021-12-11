@@ -86,8 +86,4 @@ public class TheWallsBaseCommand implements CommandExecutor {
 		return true;
 	}
 
-	private void help(CommandSender sender) {
-
-	}
-
 }

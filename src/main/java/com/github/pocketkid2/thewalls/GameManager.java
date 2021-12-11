@@ -13,6 +13,7 @@ public class GameManager {
 	public GameManager(TheWallsPlugin p) {
 		plugin = p;
 		arenas = new ArrayList<Arena>();
+
 	}
 
 	public List<Arena> getArenas() {
