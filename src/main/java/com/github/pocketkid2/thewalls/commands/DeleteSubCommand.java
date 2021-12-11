@@ -10,9 +10,9 @@ import com.github.pocketkid2.thewalls.TheWallsPlugin;
 
 import net.md_5.bungee.api.ChatColor;
 
-public class CreateSubCommand extends TheWallsSubCommand {
+public class DeleteSubCommand extends TheWallsSubCommand {
 
-	public CreateSubCommand(TheWallsPlugin p) {
+	public DeleteSubCommand(TheWallsPlugin p) {
 		super(p);
 	}
 
@@ -23,7 +23,7 @@ public class CreateSubCommand extends TheWallsSubCommand {
 
 	@Override
 	public List<String> names() {
-		return Arrays.asList("create");
+		return Arrays.asList("delete", "remove");
 	}
 
 	@Override
@@ -43,19 +43,19 @@ public class CreateSubCommand extends TheWallsSubCommand {
 
 	@Override
 	public String usageMessage() {
-		return "create <name>";
+		return "delete <name>";
 	}
 
 	@Override
 	public void execute(CommandSender sender, String[] args) {
 		for (Arena a : plugin.getGM().getArenas()) {
 			if (a.getName().equalsIgnoreCase(args[0])) {
-				sender.sendMessage(ChatColor.RED + "The arena " + ChatColor.GRAY + a.getName() + ChatColor.RED + " already exists!");
+				plugin.getGM().removeArena(args[0]);
+				sender.sendMessage(ChatColor.AQUA + "Deleted arena " + ChatColor.GREEN + args[0]);
 				return;
 			}
 		}
-		plugin.getGM().createArena(args[0]);
-		sender.sendMessage(ChatColor.AQUA + "Created arena " + ChatColor.GREEN + args[0]);
+		sender.sendMessage(ChatColor.RED + "The arena " + ChatColor.GRAY + args[0] + ChatColor.RED + " doesn't exist!");
 	}
 
 }

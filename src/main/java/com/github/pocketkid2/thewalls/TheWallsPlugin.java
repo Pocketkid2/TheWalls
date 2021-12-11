@@ -13,8 +13,9 @@ public class TheWallsPlugin extends JavaPlugin {
 	@Override
 	public void onEnable() {
 		saveDefaultConfig();
-		getConfig().getBoolean("debug", false);
+		debug = getConfig().getBoolean("debug", false);
 		getCommand("thewalls").setExecutor(new TheWallsBaseCommand(this));
+		gm = new GameManager(this);
 		log("Enabled!");
 	}
 

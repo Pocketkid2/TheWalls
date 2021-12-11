@@ -10,10 +10,11 @@ import com.github.pocketkid2.thewalls.TheWallsPlugin;
 
 import net.md_5.bungee.api.ChatColor;
 
-public class CreateSubCommand extends TheWallsSubCommand {
+public class ListSubCommand extends TheWallsSubCommand {
 
-	public CreateSubCommand(TheWallsPlugin p) {
+	public ListSubCommand(TheWallsPlugin p) {
 		super(p);
+
 	}
 
 	@Override
@@ -23,39 +24,36 @@ public class CreateSubCommand extends TheWallsSubCommand {
 
 	@Override
 	public List<String> names() {
-		return Arrays.asList("create");
+		return Arrays.asList("list");
 	}
 
 	@Override
 	public int minArguments() {
-		return 1;
+		return 0;
 	}
 
 	@Override
 	public int maxArguments() {
-		return 1;
+		return 0;
 	}
 
 	@Override
 	public boolean isAdminCommand() {
-		return true;
+		return false;
 	}
 
 	@Override
 	public String usageMessage() {
-		return "create <name>";
+		return "list";
 	}
 
 	@Override
 	public void execute(CommandSender sender, String[] args) {
+		sender.sendMessage(ChatColor.AQUA + "Loaded arenas: (" + ChatColor.YELLOW + plugin.getGM().getArenas().size() + ChatColor.AQUA + ")");
 		for (Arena a : plugin.getGM().getArenas()) {
-			if (a.getName().equalsIgnoreCase(args[0])) {
-				sender.sendMessage(ChatColor.RED + "The arena " + ChatColor.GRAY + a.getName() + ChatColor.RED + " already exists!");
-				return;
-			}
+			sender.sendMessage(ChatColor.GREEN + a.getName() + ChatColor.AQUA + " - " + ChatColor.GOLD + a.getActivePlayers().size() + ChatColor.AQUA + " active players"
+					+ (a.getActivePlayers().size() > 0 ? ChatColor.GRAY + " (" + String.join(", ", args) + ")" : ""));
 		}
-		plugin.getGM().createArena(args[0]);
-		sender.sendMessage(ChatColor.AQUA + "Created arena " + ChatColor.GREEN + args[0]);
 	}
 
 }
