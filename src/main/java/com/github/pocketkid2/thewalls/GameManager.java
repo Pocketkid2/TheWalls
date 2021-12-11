@@ -35,4 +35,8 @@ public class GameManager {
 	public void removeArena(String name) {
 		arenas = arenas.stream().filter(a -> !a.getName().equalsIgnoreCase(name)).collect(Collectors.toList());
 	}
+
+	public List<Arena> getArenaData() {
+		return arenas;
+	}
 }

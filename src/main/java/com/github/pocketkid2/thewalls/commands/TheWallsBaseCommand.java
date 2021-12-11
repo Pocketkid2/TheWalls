@@ -27,6 +27,8 @@ public class TheWallsBaseCommand implements CommandExecutor {
 		subCommands.add(new CreateSubCommand(p));
 		subCommands.add(new ListSubCommand(p));
 		subCommands.add(new DeleteSubCommand(p));
+		subCommands.add(new LobbySubCommand(p));
+		subCommands.add(new SetLobbySpawnSubCommand(p));
 	}
 
 	@Override

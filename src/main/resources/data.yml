@@ -1,0 +1,5 @@
+# This is the data storage for the lobby spawn location, you shouldn't need to change this because /thewalls setlobbyspawn makes it really easy
+lobby-spawn-location:
+
+# This is the data storage for all the arenas. Again, you shouldn't need to change these, because the commands will allow you to do everything.
+arena-data:
