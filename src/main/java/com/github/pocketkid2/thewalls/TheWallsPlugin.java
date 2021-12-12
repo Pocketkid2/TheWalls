@@ -14,10 +14,6 @@ import com.github.pocketkid2.thewalls.commands.TheWallsBaseCommand;
 
 public class TheWallsPlugin extends JavaPlugin {
 
-	static {
-		ConfigurationSerialization.registerClass(Arena.class);
-	}
-
 	private boolean debug;
 
 	private File dataFile;
@@ -29,6 +25,7 @@ public class TheWallsPlugin extends JavaPlugin {
 
 	@Override
 	public void onEnable() {
+		ConfigurationSerialization.registerClass(Arena.class);
 		saveDefaultConfig();
 		createDataConfig();
 
@@ -37,7 +34,7 @@ public class TheWallsPlugin extends JavaPlugin {
 
 		getCommand("thewalls").setExecutor(new TheWallsBaseCommand(this));
 
-		lobbySpawn = getConfig().getSerializable("lobby-spawn-location", Location.class);
+		lobbySpawn = dataConfig.getSerializable("lobby-spawn-location", Location.class);
 		debug("Lobby spawn loaded as " + (lobbySpawn == null ? "null" : lobbySpawn.toString()));
 
 		gm = new GameManager(this);
