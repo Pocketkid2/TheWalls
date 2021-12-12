@@ -51,10 +51,11 @@ public class LobbySubCommand extends TheWallsSubCommand {
 	public void execute(CommandSender sender, String[] args) {
 		if (plugin.getLobbySpawn() == null) {
 			sender.sendMessage(ChatColor.RED + "The lobby spawn has not been created yet!");
+		} else {
+			Player player = (Player) sender;
+			player.teleport(plugin.getLobbySpawn(), TeleportCause.COMMAND);
+			player.sendMessage(ChatColor.AQUA + "You have been brought to the lobby!");
 		}
-		Player player = (Player) sender;
-		player.teleport(plugin.getLobbySpawn(), TeleportCause.COMMAND);
-		player.sendMessage(ChatColor.AQUA + "You have been brought to the lobby!");
 	}
 
 }
