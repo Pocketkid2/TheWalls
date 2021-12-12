@@ -10,10 +10,11 @@ public class GameManager {
 
 	private List<Arena> arenas;
 
+	@SuppressWarnings("unchecked")
 	public GameManager(TheWallsPlugin p) {
 		plugin = p;
-		arenas = new ArrayList<Arena>();
-
+		arenas = (List<Arena>) plugin.getDataConfig().getList("arena-data", new ArrayList<Arena>());
+		plugin.log("Loaded " + arenas.size() + " arenas!");
 	}
 
 	public List<Arena> getArenas() {
