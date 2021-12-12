@@ -8,11 +8,16 @@ import java.util.Map;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
+import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.entity.Player;
 
 import com.sk89q.worldedit.regions.CuboidRegion;
 
 public class Arena implements ConfigurationSerializable {
+
+	static {
+		ConfigurationSerialization.registerClass(Arena.class);
+	}
 
 	private String name;
 	private Status status;
