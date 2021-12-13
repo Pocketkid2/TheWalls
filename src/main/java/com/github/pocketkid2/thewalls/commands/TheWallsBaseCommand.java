@@ -29,6 +29,8 @@ public class TheWallsBaseCommand implements CommandExecutor {
 		subCommands.add(new DeleteSubCommand(p));
 		subCommands.add(new LobbySubCommand(p));
 		subCommands.add(new SetLobbySpawnSubCommand(p));
+		subCommands.add(new SetArenaJoinSignSubCommand(p));
+		subCommands.add(new SetArenaPlayerSignSubCommand(p));
 	}
 
 	@Override
