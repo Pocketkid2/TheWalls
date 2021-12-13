@@ -22,19 +22,36 @@ public class Arena implements ConfigurationSerializable {
 	private String name;
 	private Status status;
 
+	private Location joinSign;
+	private Location playerSign;
+
+	private Location arenaMin;
+	private Location arenaMax;
 	private CuboidRegion arena;
+
+	private List<Location> wallMins;
+	private List<Location> wallMaxs;
 	private List<CuboidRegion> walls;
+
 	private List<Location> spawns;
 
 	private List<Player> activePlayers;
 	private List<OfflinePlayer> inactivePlayers;
 
+	// Initial constructor (when nothing but a name is given)
 	public Arena(String n) {
 		name = n;
 		status = Status.INCOMPLETE;
+
+		joinSign = null;
+		playerSign = null;
+
 		arena = null;
+
 		walls = new ArrayList<CuboidRegion>();
+
 		spawns = new ArrayList<Location>();
+
 		activePlayers = new ArrayList<Player>();
 		inactivePlayers = new ArrayList<OfflinePlayer>();
 	}
@@ -44,8 +61,17 @@ public class Arena implements ConfigurationSerializable {
 	//
 	public Arena(Map<String, Object> map) {
 		name = (String) map.get("name");
-		status = Status.INCOMPLETE;
-		arena = null;
+		// status = Status.INCOMPLETE;
+
+		joinSign = (Location) map.get("join-sign");
+		playerSign = (Location) map.get("player-sign");
+
+		arenaMin = (Location) map.get("arena-min");
+		arenaMax = (Location) map.get("arena-max");
+		if (arenaMin != null && arenaMax != null && arenaMin.getWorld() == arenaMax.getWorld()) {
+
+		}
+
 		walls = new ArrayList<CuboidRegion>();
 		spawns = new ArrayList<Location>();
 		activePlayers = new ArrayList<Player>();
