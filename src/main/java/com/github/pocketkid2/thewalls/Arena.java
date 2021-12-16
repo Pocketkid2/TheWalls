@@ -11,8 +11,6 @@ import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.entity.Player;
 
-import com.sk89q.worldedit.regions.CuboidRegion;
-
 public class Arena implements ConfigurationSerializable {
 
 	static {
@@ -25,13 +23,9 @@ public class Arena implements ConfigurationSerializable {
 	private Location joinSign;
 	private Location playerSign;
 
-	private Location arenaMin;
-	private Location arenaMax;
-	private CuboidRegion arena;
+	private Region arena;
 
-	private List<Location> wallMins;
-	private List<Location> wallMaxs;
-	private List<CuboidRegion> walls;
+	private List<Region> walls;
 
 	private List<Location> spawns;
 
@@ -48,7 +42,7 @@ public class Arena implements ConfigurationSerializable {
 
 		arena = null;
 
-		walls = new ArrayList<CuboidRegion>();
+		walls = new ArrayList<Region>();
 
 		spawns = new ArrayList<Location>();
 
@@ -61,21 +55,30 @@ public class Arena implements ConfigurationSerializable {
 	//
 	public Arena(Map<String, Object> map) {
 		name = (String) map.get("name");
-		// status = Status.INCOMPLETE;
 
 		joinSign = (Location) map.get("join-sign");
 		playerSign = (Location) map.get("player-sign");
 
-		arenaMin = (Location) map.get("arena-min");
-		arenaMax = (Location) map.get("arena-max");
-		if (arenaMin != null && arenaMax != null && arenaMin.getWorld() == arenaMax.getWorld()) {
+		arena = (Region) map.get("arena-region");
 
+		walls = (List<Region>) map.get("wall-regions");
+		if (walls == null) {
+			walls = new ArrayList<Region>();
 		}
 
-		walls = new ArrayList<CuboidRegion>();
-		spawns = new ArrayList<Location>();
+		spawns = (List<Location>) map.get("spawn-locations");
+		if (spawns == null) {
+			spawns = new ArrayList<Location>();
+		}
+
 		activePlayers = new ArrayList<Player>();
 		inactivePlayers = new ArrayList<OfflinePlayer>();
+
+		if (joinSign != null && playerSign != null && arena != null && walls.size() > 0 && spawns.size() == 4) {
+			status = Status.READY;
+		} else {
+			status = Status.INCOMPLETE;
+		}
 	}
 
 	//
@@ -84,7 +87,18 @@ public class Arena implements ConfigurationSerializable {
 	@Override
 	public Map<String, Object> serialize() {
 		Map<String, Object> map = new HashMap<String, Object>();
+
 		map.put("name", name);
+
+		map.put("join-sign", joinSign);
+		map.put("player-sign", playerSign);
+
+		map.put("arena-region", arena);
+
+		map.put("wall-regions", walls);
+
+		map.put("spawn-locations", spawns);
+
 		return map;
 	}
 
@@ -92,8 +106,64 @@ public class Arena implements ConfigurationSerializable {
 		return name;
 	}
 
+	public void setName(String newName) {
+		name = newName;
+	}
+
 	public Status getStatus() {
 		return status;
+	}
+
+	public void setStatus(Status newStatus) {
+		status = newStatus;
+	}
+
+	public Location getJoinSign() {
+		return joinSign;
+	}
+
+	public void setJoinSign(Location newLoc) {
+		joinSign = newLoc;
+	}
+
+	public Location getPlayerSign() {
+		return playerSign;
+	}
+
+	public void setPlayerSign(Location newLoc) {
+		playerSign = newLoc;
+	}
+
+	public Region getArenaRegion() {
+		return arena;
+	}
+
+	public void setArenaRegion(Region newRegion) {
+		arena = newRegion;
+	}
+
+	public List<Region> getWallRegions() {
+		return walls;
+	}
+
+	public void addWallRegion(Region newRegion) {
+		walls.add(newRegion);
+	}
+
+	public void clearWallRegions() {
+		walls.clear();
+	}
+
+	public List<Location> getSpawnLocations() {
+		return spawns;
+	}
+
+	public void addSpawnLocation(Location newLoc) {
+		spawns.add(newLoc);
+	}
+
+	public void clearSpawnLocations() {
+		spawns.clear();
 	}
 
 	public List<Player> getActivePlayers() {
