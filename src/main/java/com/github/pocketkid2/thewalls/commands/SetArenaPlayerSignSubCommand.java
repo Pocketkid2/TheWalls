@@ -30,6 +30,11 @@ public class SetArenaPlayerSignSubCommand extends TheWallsSubCommand {
 	}
 
 	@Override
+	public String description() {
+		return "Sets the arena player sign for the specified arena to the sign you are currently looking at";
+	}
+
+	@Override
 	public int minArguments() {
 		return 1;
 	}
@@ -50,7 +55,7 @@ public class SetArenaPlayerSignSubCommand extends TheWallsSubCommand {
 	}
 
 	@Override
-	public void execute(CommandSender sender, String[] args) {
+	public void execute(CommandSender sender, String label, String[] args) {
 		Player player = (Player) sender;
 		Block b = player.getTargetBlockExact(5);
 		if (b == null) {
