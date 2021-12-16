@@ -27,6 +27,11 @@ public class SetLobbySpawnSubCommand extends TheWallsSubCommand {
 	}
 
 	@Override
+	public String description() {
+		return "Sets TheWalls lobby spawn location to your current location";
+	}
+
+	@Override
 	public int minArguments() {
 		return 0;
 	}
@@ -47,10 +52,9 @@ public class SetLobbySpawnSubCommand extends TheWallsSubCommand {
 	}
 
 	@Override
-	public void execute(CommandSender sender, String[] args) {
+	public void execute(CommandSender sender, String label, String[] args) {
 		Player player = (Player) sender;
 		plugin.setLobbySpawn(player.getLocation());
 		player.sendMessage(ChatColor.AQUA + "Set the lobby spawn to your current location!");
 	}
-
 }

@@ -27,6 +27,11 @@ public class CreateSubCommand extends TheWallsSubCommand {
 	}
 
 	@Override
+	public String description() {
+		return "Creates a new arena with the specified name";
+	}
+
+	@Override
 	public int minArguments() {
 		return 1;
 	}
@@ -47,7 +52,7 @@ public class CreateSubCommand extends TheWallsSubCommand {
 	}
 
 	@Override
-	public void execute(CommandSender sender, String[] args) {
+	public void execute(CommandSender sender, String label, String[] args) {
 		for (Arena a : plugin.getGM().getArenas()) {
 			if (a.getName().equalsIgnoreCase(args[0])) {
 				sender.sendMessage(ChatColor.RED + "The arena " + ChatColor.GRAY + a.getName() + ChatColor.RED + " already exists!");

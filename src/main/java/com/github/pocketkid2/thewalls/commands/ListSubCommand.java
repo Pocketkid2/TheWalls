@@ -28,6 +28,11 @@ public class ListSubCommand extends TheWallsSubCommand {
 	}
 
 	@Override
+	public String description() {
+		return "Shows a list of all arenas (w/ status and player count)";
+	}
+
+	@Override
 	public int minArguments() {
 		return 0;
 	}
@@ -48,7 +53,7 @@ public class ListSubCommand extends TheWallsSubCommand {
 	}
 
 	@Override
-	public void execute(CommandSender sender, String[] args) {
+	public void execute(CommandSender sender, String label, String[] args) {
 		sender.sendMessage(ChatColor.AQUA + "Loaded arenas: (" + ChatColor.YELLOW + plugin.getGM().getArenas().size() + ChatColor.AQUA + ")");
 		for (Arena a : plugin.getGM().getArenas()) {
 			sender.sendMessage(ChatColor.GREEN + a.getName() + ChatColor.AQUA + " - " + ChatColor.BLUE + ChatColor.ITALIC + a.getStatus().toString() + ChatColor.AQUA + " - " + ChatColor.GOLD

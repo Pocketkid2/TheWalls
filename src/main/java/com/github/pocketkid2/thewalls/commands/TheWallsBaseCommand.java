@@ -29,6 +29,8 @@ public class TheWallsBaseCommand implements CommandExecutor {
 		subCommands.add(new DeleteSubCommand(p));
 		subCommands.add(new LobbySubCommand(p));
 		subCommands.add(new SetLobbySpawnSubCommand(p));
+
+		subCommands.add(new HelpSubCommand(p));
 	}
 
 	@Override
@@ -73,7 +75,7 @@ public class TheWallsBaseCommand implements CommandExecutor {
 						return true;
 					}
 
-					sub.execute(sender, Arrays.copyOfRange(args, 1, args.length));
+					sub.execute(sender, label, Arrays.copyOfRange(args, 1, args.length));
 
 					return true;
 				}
@@ -84,6 +86,69 @@ public class TheWallsBaseCommand implements CommandExecutor {
 		sender.sendMessage(ChatColor.RED + "The command you entered, " + ChatColor.GRAY + "/" + label + " " + args[0] + ChatColor.RED + ", isn't a valid command.");
 		sender.sendMessage(ChatColor.RED + "Try " + ChatColor.GRAY + "/" + label + " help" + ChatColor.RED + " to see a list of valid commands");
 		return true;
+	}
+
+	public class HelpSubCommand extends TheWallsSubCommand {
+
+		public HelpSubCommand(TheWallsPlugin p) {
+			super(p);
+		}
+
+		@Override
+		public boolean mustBePlayer() {
+			return false;
+		}
+
+		@Override
+		public List<String> names() {
+			return Arrays.asList("help");
+		}
+
+		@Override
+		public String description() {
+			return "Shows a list of commands or help for a specific command";
+		}
+
+		@Override
+		public int minArguments() {
+			return 0;
+		}
+
+		@Override
+		public int maxArguments() {
+			return 1;
+		}
+
+		@Override
+		public boolean isAdminCommand() {
+			return false;
+		}
+
+		@Override
+		public String usageMessage() {
+			return "help <command>";
+		}
+
+		@Override
+		public void execute(CommandSender sender, String label, String[] args) {
+			if (args.length > 0) {
+				for (TheWallsSubCommand sub : subCommands) {
+					for (String name : sub.names()) {
+						if (name.equalsIgnoreCase(args[0])) {
+							sender.sendMessage(ChatColor.AQUA + "That command is used as follows: " + ChatColor.GOLD + "/" + label + " " + sub.usageMessage());
+						}
+					}
+				}
+			} else {
+				sender.sendMessage(ChatColor.AQUA + "The following commands are available:");
+				for (TheWallsSubCommand sub : subCommands) {
+					if (sub.isAdminCommand() && sender.hasPermission("thewalls.admin")) {
+						sender.sendMessage(ChatColor.GOLD + "/" + label + " " + sub.usageMessage() + ChatColor.GRAY + " - " + sub.description());
+					}
+				}
+			}
+		}
+
 	}
 
 }

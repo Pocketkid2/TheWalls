@@ -27,6 +27,11 @@ public class DeleteSubCommand extends TheWallsSubCommand {
 	}
 
 	@Override
+	public String description() {
+		return "Deletes the specified arena";
+	}
+
+	@Override
 	public int minArguments() {
 		return 1;
 	}
@@ -47,7 +52,7 @@ public class DeleteSubCommand extends TheWallsSubCommand {
 	}
 
 	@Override
-	public void execute(CommandSender sender, String[] args) {
+	public void execute(CommandSender sender, String label, String[] args) {
 		for (Arena a : plugin.getGM().getArenas()) {
 			if (a.getName().equalsIgnoreCase(args[0])) {
 				plugin.getGM().removeArena(args[0]);

@@ -18,6 +18,8 @@ public abstract class TheWallsSubCommand {
 
 	public abstract List<String> names();
 
+	public abstract String description();
+
 	// Minimum is with respect to this subcommand, so for example /tw create <name>
 	// has min 1 and max 1
 	public abstract int minArguments();
@@ -30,6 +32,6 @@ public abstract class TheWallsSubCommand {
 
 	// Because we supply a getter for the argument range,
 	// we guarantee that the array will be within that range
-	public abstract void execute(CommandSender sender, String[] args);
+	public abstract void execute(CommandSender sender, String label, String[] args);
 
 }

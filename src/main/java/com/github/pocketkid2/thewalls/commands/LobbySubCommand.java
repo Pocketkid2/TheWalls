@@ -28,6 +28,11 @@ public class LobbySubCommand extends TheWallsSubCommand {
 	}
 
 	@Override
+	public String description() {
+		return "Teleports you to TheWalls lobby spawn location";
+	}
+
+	@Override
 	public int minArguments() {
 		return 0;
 	}
@@ -48,7 +53,7 @@ public class LobbySubCommand extends TheWallsSubCommand {
 	}
 
 	@Override
-	public void execute(CommandSender sender, String[] args) {
+	public void execute(CommandSender sender, String label, String[] args) {
 		if (plugin.getLobbySpawn() == null) {
 			sender.sendMessage(ChatColor.RED + "The lobby spawn has not been created yet!");
 		} else {
