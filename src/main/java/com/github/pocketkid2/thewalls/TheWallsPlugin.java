@@ -12,6 +12,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.github.pocketkid2.thewalls.commands.TheWallsBaseCommand;
 
+import net.md_5.bungee.api.ChatColor;
+
 public class TheWallsPlugin extends JavaPlugin {
 
 	private boolean debug;
@@ -104,5 +106,9 @@ public class TheWallsPlugin extends JavaPlugin {
 
 	public GameManager getGM() {
 		return gm;
+	}
+
+	public String addPrefix(String message) {
+		return String.format("[%s%s%s] %s", ChatColor.RED, getDescription().getName(), ChatColor.RESET, message);
 	}
 }

@@ -28,7 +28,8 @@ public class Arena implements ConfigurationSerializable {
 
 	private List<Location> spawns;
 
-	private List<Player> activePlayers;
+	private List<Player> players;
+	private List<Player> spectators;
 
 	// Initial constructor (when nothing but a name is given)
 	public Arena(String n) {
@@ -44,7 +45,7 @@ public class Arena implements ConfigurationSerializable {
 
 		spawns = new ArrayList<Location>();
 
-		activePlayers = new ArrayList<Player>();
+		players = new ArrayList<Player>();
 	}
 
 	//
@@ -68,7 +69,7 @@ public class Arena implements ConfigurationSerializable {
 			spawns = new ArrayList<Location>();
 		}
 
-		activePlayers = new ArrayList<Player>();
+		players = new ArrayList<Player>();
 
 		if ((joinSign != null) && (playerSign != null) && (arena != null) && (walls.size() > 0) && (spawns.size() == 4)) {
 			status = Status.READY;
@@ -163,7 +164,7 @@ public class Arena implements ConfigurationSerializable {
 	}
 
 	public List<Player> getActivePlayers() {
-		return activePlayers;
+		return players;
 	}
 
 }
