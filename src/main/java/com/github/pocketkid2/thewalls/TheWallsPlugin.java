@@ -111,4 +111,9 @@ public class TheWallsPlugin extends JavaPlugin {
 	public String addPrefix(String message) {
 		return String.format("[%s%s%s] %s", ChatColor.RED, getDescription().getName(), ChatColor.RESET, message);
 	}
+
+	// Sends a message to all players not in a game
+	public void broadcast(String message) {
+
+	}
 }

@@ -163,7 +163,7 @@ public class Arena implements ConfigurationSerializable {
 		spawns.clear();
 	}
 
-	public List<Player> getActivePlayers() {
+	public List<Player> getPlayers() {
 		return players;
 	}
 
