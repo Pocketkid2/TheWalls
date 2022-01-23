@@ -8,7 +8,7 @@ depend: [WorldEdit]
 commands:
     thewalls:
         description: The base command for TheWalls PVP!
-        usage: /<command> <subcommand>
+        usage: /<command>
         aliases: [tw]
 permissions:
     thewalls.player:
