@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.bukkit.Location;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.entity.Player;
@@ -30,7 +29,6 @@ public class Arena implements ConfigurationSerializable {
 	private List<Location> spawns;
 
 	private List<Player> activePlayers;
-	private List<OfflinePlayer> inactivePlayers;
 
 	// Initial constructor (when nothing but a name is given)
 	public Arena(String n) {
@@ -47,7 +45,6 @@ public class Arena implements ConfigurationSerializable {
 		spawns = new ArrayList<Location>();
 
 		activePlayers = new ArrayList<Player>();
-		inactivePlayers = new ArrayList<OfflinePlayer>();
 	}
 
 	//
@@ -72,9 +69,8 @@ public class Arena implements ConfigurationSerializable {
 		}
 
 		activePlayers = new ArrayList<Player>();
-		inactivePlayers = new ArrayList<OfflinePlayer>();
 
-		if (joinSign != null && playerSign != null && arena != null && walls.size() > 0 && spawns.size() == 4) {
+		if ((joinSign != null) && (playerSign != null) && (arena != null) && (walls.size() > 0) && (spawns.size() == 4)) {
 			status = Status.READY;
 		} else {
 			status = Status.INCOMPLETE;
