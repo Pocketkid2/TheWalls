@@ -55,6 +55,7 @@ public class Arena implements ConfigurationSerializable {
 	//
 	// DESERIALIZER
 	//
+	@SuppressWarnings("unchecked")
 	public Arena(Map<String, Object> map) {
 		plugin = (TheWallsPlugin) Bukkit.getServer().getPluginManager().getPlugin("TheWalls");
 
