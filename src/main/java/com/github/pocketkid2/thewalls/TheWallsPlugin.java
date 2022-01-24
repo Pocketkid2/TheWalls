@@ -8,6 +8,7 @@ import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.github.pocketkid2.thewalls.commands.TheWallsBaseCommand;
@@ -113,7 +114,11 @@ public class TheWallsPlugin extends JavaPlugin {
 	}
 
 	// Sends a message to all players not in a game
-	public void broadcast(String message) {
-
+	public void broadcastExcept(String message, Arena arena) {
+		for (Player p : getServer().getOnlinePlayers()) {
+			if (!arena.isPlayer(p)) {
+				p.sendMessage(addPrefix(message));
+			}
+		}
 	}
 }

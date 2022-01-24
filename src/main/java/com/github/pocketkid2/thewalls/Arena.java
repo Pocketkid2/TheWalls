@@ -5,12 +5,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.entity.Player;
 
 public class Arena implements ConfigurationSerializable {
+
+	private TheWallsPlugin plugin;
 
 	static {
 		ConfigurationSerialization.registerClass(Arena.class);
@@ -29,10 +32,11 @@ public class Arena implements ConfigurationSerializable {
 	private List<Location> spawns;
 
 	private List<Player> players;
-	private List<Player> spectators;
 
 	// Initial constructor (when nothing but a name is given)
-	public Arena(String n) {
+	public Arena(TheWallsPlugin p, String n) {
+		plugin = p;
+
 		name = n;
 		status = Status.INCOMPLETE;
 
@@ -52,6 +56,8 @@ public class Arena implements ConfigurationSerializable {
 	// DESERIALIZER
 	//
 	public Arena(Map<String, Object> map) {
+		plugin = (TheWallsPlugin) Bukkit.getServer().getPluginManager().getPlugin("TheWalls");
+
 		name = (String) map.get("name");
 
 		joinSign = (Location) map.get("join-sign");
@@ -71,11 +77,7 @@ public class Arena implements ConfigurationSerializable {
 
 		players = new ArrayList<Player>();
 
-		if ((joinSign != null) && (playerSign != null) && (arena != null) && (walls.size() > 0) && (spawns.size() == 4)) {
-			status = Status.READY;
-		} else {
-			status = Status.INCOMPLETE;
-		}
+		checkStatus();
 	}
 
 	//
@@ -99,6 +101,14 @@ public class Arena implements ConfigurationSerializable {
 		return map;
 	}
 
+	public void checkStatus() {
+		if (joinSign != null && playerSign != null && arena != null && walls.size() > 0 && spawns.size() == 4) {
+			status = Status.READY;
+		} else {
+			status = Status.INCOMPLETE;
+		}
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -120,6 +130,7 @@ public class Arena implements ConfigurationSerializable {
 	}
 
 	public void setJoinSign(Location newLoc) {
+		checkStatus();
 		joinSign = newLoc;
 	}
 
@@ -128,6 +139,7 @@ public class Arena implements ConfigurationSerializable {
 	}
 
 	public void setPlayerSign(Location newLoc) {
+		checkStatus();
 		playerSign = newLoc;
 	}
 
@@ -136,6 +148,7 @@ public class Arena implements ConfigurationSerializable {
 	}
 
 	public void setArenaRegion(Region newRegion) {
+		checkStatus();
 		arena = newRegion;
 	}
 
@@ -144,10 +157,12 @@ public class Arena implements ConfigurationSerializable {
 	}
 
 	public void addWallRegion(Region newRegion) {
+		checkStatus();
 		walls.add(newRegion);
 	}
 
 	public void clearWallRegions() {
+		checkStatus();
 		walls.clear();
 	}
 
@@ -156,15 +171,27 @@ public class Arena implements ConfigurationSerializable {
 	}
 
 	public void addSpawnLocation(Location newLoc) {
+		checkStatus();
 		spawns.add(newLoc);
 	}
 
 	public void clearSpawnLocations() {
+		checkStatus();
 		spawns.clear();
 	}
 
 	public List<Player> getPlayers() {
 		return players;
+	}
+
+	public boolean isPlayer(Player p) {
+		return players.contains(p);
+	}
+
+	public void broadcast(String message) {
+		for (Player p : players) {
+			p.sendMessage(plugin.addPrefix(message));
+		}
 	}
 
 }

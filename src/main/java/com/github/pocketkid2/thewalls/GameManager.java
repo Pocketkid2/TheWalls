@@ -31,7 +31,7 @@ public class GameManager {
 	}
 
 	public void createArena(String name) {
-		arenas.add(new Arena(name));
+		arenas.add(new Arena(plugin, name));
 	}
 
 	public void removeArena(String name) {
