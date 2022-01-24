@@ -53,14 +53,14 @@ public class DeleteSubCommand extends TheWallsSubCommand {
 
 	@Override
 	public void execute(CommandSender sender, String label, String[] args) {
-		for (Arena a : plugin.getGM().getArenas()) {
-			if (a.getName().equalsIgnoreCase(args[0])) {
-				plugin.getGM().removeArena(args[0]);
-				sender.sendMessage(ChatColor.AQUA + "Deleted arena " + ChatColor.GREEN + a.getName());
-				return;
-			}
+		Arena arena = plugin.getGM().getArenaByName(args[0]);
+
+		if (arena == null) {
+			sender.sendMessage(plugin.addPrefix(ChatColor.RED + "The arena " + ChatColor.GRAY + args[0] + ChatColor.RED + " doesn't exist!"));
+		} else {
+			plugin.getGM().removeArena(args[0]);
+			sender.sendMessage(plugin.addPrefix(ChatColor.AQUA + "Deleted arena " + ChatColor.GREEN + arena.getName()));
 		}
-		sender.sendMessage(ChatColor.RED + "The arena " + ChatColor.GRAY + args[0] + ChatColor.RED + " doesn't exist!");
 	}
 
 }

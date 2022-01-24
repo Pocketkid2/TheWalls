@@ -54,10 +54,10 @@ public class ListSubCommand extends TheWallsSubCommand {
 
 	@Override
 	public void execute(CommandSender sender, String label, String[] args) {
-		sender.sendMessage(ChatColor.AQUA + "Loaded arenas: (" + ChatColor.YELLOW + plugin.getGM().getArenas().size() + ChatColor.AQUA + ")");
+		sender.sendMessage(plugin.addPrefix(ChatColor.AQUA + "Loaded arenas: (" + ChatColor.YELLOW + plugin.getGM().getArenas().size() + ChatColor.AQUA + ")"));
 		for (Arena a : plugin.getGM().getArenas()) {
-			sender.sendMessage(ChatColor.GREEN + a.getName() + ChatColor.AQUA + " - " + ChatColor.BLUE + ChatColor.ITALIC + a.getStatus().toString() + ChatColor.AQUA + " - " + ChatColor.GOLD
-					+ a.getPlayers().size() + ChatColor.AQUA + " active players" + (a.getPlayers().size() > 0 ? ChatColor.GRAY + " (" + String.join(", ", args) + ")" : ""));
+			sender.sendMessage(plugin.addPrefix(ChatColor.GREEN + a.getName() + ChatColor.AQUA + " - " + ChatColor.BLUE + ChatColor.ITALIC + a.getStatus().toString() + ChatColor.AQUA + " - "
+					+ ChatColor.GOLD + a.getPlayers().size() + ChatColor.AQUA + " players" + (a.getPlayers().size() > 0 ? ChatColor.GRAY + " (" + String.join(", ", args) + ")" : "")));
 		}
 	}
 

@@ -9,9 +9,6 @@ public enum Status {
 	// When all the values have been initialized and the arena is idling
 	READY,
 
-	// When the first player has joined, and the arena is waiting to start the game
-	WAITING,
-
 	// When the game is doing the countdown and the game is about to enter play
 	STARTING,
 

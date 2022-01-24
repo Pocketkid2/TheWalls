@@ -29,7 +29,7 @@ public class LobbySubCommand extends TheWallsSubCommand {
 
 	@Override
 	public String description() {
-		return "Teleports you to TheWalls lobby spawn location";
+		return "Teleports you to the lobby location for The Walls";
 	}
 
 	@Override
@@ -55,11 +55,11 @@ public class LobbySubCommand extends TheWallsSubCommand {
 	@Override
 	public void execute(CommandSender sender, String label, String[] args) {
 		if (plugin.getLobbySpawn() == null) {
-			sender.sendMessage(ChatColor.RED + "The lobby spawn has not been created yet!");
+			sender.sendMessage(plugin.addPrefix(ChatColor.RED + "The lobby spawn has not been created yet!"));
 		} else {
 			Player player = (Player) sender;
 			player.teleport(plugin.getLobbySpawn(), TeleportCause.COMMAND);
-			player.sendMessage(ChatColor.AQUA + "You have been brought to the lobby!");
+			player.sendMessage(plugin.addPrefix(ChatColor.AQUA + "You have been brought to the lobby!"));
 		}
 	}
 

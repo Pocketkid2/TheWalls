@@ -55,6 +55,6 @@ public class SetLobbySpawnSubCommand extends TheWallsSubCommand {
 	public void execute(CommandSender sender, String label, String[] args) {
 		Player player = (Player) sender;
 		plugin.setLobbySpawn(player.getLocation());
-		player.sendMessage(ChatColor.AQUA + "Set the lobby spawn to your current location!");
+		player.sendMessage(plugin.addPrefix(ChatColor.AQUA + "Set the lobby spawn to your current location!"));
 	}
 }

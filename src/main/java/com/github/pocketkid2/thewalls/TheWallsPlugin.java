@@ -48,7 +48,7 @@ public class TheWallsPlugin extends JavaPlugin {
 	@Override
 	public void onDisable() {
 		dataConfig.set("lobby-spawn-location", lobbySpawn);
-		dataConfig.set("arena-data", gm.getArenaData());
+		dataConfig.set("arena-data", gm.getArenas());
 
 		saveConfig();
 		try {

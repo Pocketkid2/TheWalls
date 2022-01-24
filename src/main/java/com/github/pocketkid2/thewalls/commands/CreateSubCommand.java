@@ -55,12 +55,12 @@ public class CreateSubCommand extends TheWallsSubCommand {
 	public void execute(CommandSender sender, String label, String[] args) {
 		for (Arena a : plugin.getGM().getArenas()) {
 			if (a.getName().equalsIgnoreCase(args[0])) {
-				sender.sendMessage(ChatColor.RED + "The arena " + ChatColor.GRAY + a.getName() + ChatColor.RED + " already exists!");
+				sender.sendMessage(plugin.addPrefix(ChatColor.RED + "The arena " + ChatColor.GRAY + a.getName() + ChatColor.RED + " already exists!"));
 				return;
 			}
 		}
 		plugin.getGM().createArena(args[0]);
-		sender.sendMessage(ChatColor.AQUA + "Created arena " + ChatColor.GREEN + args[0]);
+		sender.sendMessage(plugin.addPrefix(ChatColor.AQUA + "Created arena " + ChatColor.GREEN + args[0]));
 	}
 
 }

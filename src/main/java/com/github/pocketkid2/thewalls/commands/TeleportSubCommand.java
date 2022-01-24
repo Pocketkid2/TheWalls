@@ -60,12 +60,12 @@ public class TeleportSubCommand extends TheWallsSubCommand {
 		Player player = (Player) sender;
 		Arena a = plugin.getGM().getArenaByName(args[0]);
 		if (a == null) {
-			player.sendMessage(ChatColor.RED + "The arena " + ChatColor.GRAY + args[0] + ChatColor.RED + " does not exist!");
+			player.sendMessage(plugin.addPrefix(ChatColor.RED + "The arena " + ChatColor.GRAY + args[0] + ChatColor.RED + " does not exist!"));
 			return;
 		}
 		List<Location> spawns = a.getSpawnLocations();
 		if (spawns == null || spawns.size() < 1) {
-			player.sendMessage(ChatColor.RED + "The arena " + ChatColor.GRAY + a.getName() + ChatColor.RED + " has no spawn locations defined!");
+			player.sendMessage(plugin.addPrefix(ChatColor.RED + "The arena " + ChatColor.GRAY + a.getName() + ChatColor.RED + " has no spawn locations defined!"));
 			return;
 		}
 		Location loc;
@@ -73,19 +73,19 @@ public class TeleportSubCommand extends TheWallsSubCommand {
 			try {
 				loc = spawns.get(Integer.parseInt(args[1]) - 1);
 			} catch (NumberFormatException e) {
-				player.sendMessage(ChatColor.RED + "The index " + ChatColor.GRAY + "'" + args[1] + "'" + ChatColor.RED + " that you provided is not a valid number!");
+				player.sendMessage(plugin.addPrefix(ChatColor.RED + "The index " + ChatColor.GRAY + "'" + args[1] + "'" + ChatColor.RED + " that you provided is not a valid number!"));
 				return;
 			} catch (IndexOutOfBoundsException e) {
-				player.sendMessage(ChatColor.RED + "Arena " + ChatColor.GRAY + a.getName() + ChatColor.RED + " does not have a spawn location of index " + ChatColor.GRAY + args[1]);
-				player.sendMessage(ChatColor.RED + "Valid indexes: " + ChatColor.GRAY
-						+ String.join(", ", IntStream.rangeClosed(1, a.getSpawnLocations().size()).boxed().map(s -> s.toString()).collect(Collectors.toList())));
+				player.sendMessage(plugin.addPrefix(ChatColor.RED + "Arena " + ChatColor.GRAY + a.getName() + ChatColor.RED + " does not have a spawn location of index " + ChatColor.GRAY + args[1]));
+				player.sendMessage(plugin.addPrefix(ChatColor.RED + "Valid indexes: " + ChatColor.GRAY
+						+ String.join(", ", IntStream.rangeClosed(1, a.getSpawnLocations().size()).boxed().map(s -> s.toString()).collect(Collectors.toList()))));
 				return;
 			}
 		} else {
 			loc = spawns.get(0);
 		}
 		player.teleport(loc);
-		player.sendMessage(ChatColor.AQUA + "You have been teleported to a spawn location for arena " + ChatColor.GREEN);
+		player.sendMessage(plugin.addPrefix(ChatColor.AQUA + "You have been teleported to a spawn location for arena " + ChatColor.GREEN));
 	}
 
 }

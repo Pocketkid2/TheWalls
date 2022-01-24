@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.bukkit.entity.Player;
+
 public class GameManager {
 
 	private TheWallsPlugin plugin;
@@ -38,7 +40,11 @@ public class GameManager {
 		arenas = arenas.stream().filter(a -> !a.getName().equalsIgnoreCase(name)).collect(Collectors.toList());
 	}
 
-	public List<Arena> getArenaData() {
-		return arenas;
+	public boolean isInGame(Player player) {
+		for (Arena a : arenas) {
+			if (a.isPlayer(player))
+				return true;
+		}
+		return false;
 	}
 }

@@ -54,27 +54,27 @@ public class TheWallsBaseCommand implements CommandExecutor {
 				if (name.equalsIgnoreCase(args[0])) {
 					// If we found a matching subcommand, do the checks and execute
 					if (sub.mustBePlayer() && !(sender instanceof Player)) {
-						sender.sendMessage(ChatColor.RED + "That command can only be executed by players!");
+						sender.sendMessage(plugin.addPrefix(ChatColor.RED + "That command can only be executed by players!"));
 						return true;
 					}
 
 					if (sub.isAdminCommand() && !sender.hasPermission("thewalls.admin")) {
-						sender.sendMessage(ChatColor.RED + "That command can only be executed by admins with the right permission!");
+						sender.sendMessage(plugin.addPrefix(ChatColor.RED + "That command can only be executed by admins with the right permission!"));
 						return true;
 					}
 					if (!sub.isAdminCommand() && !sender.hasPermission("thewalls.player")) {
-						sender.sendMessage(ChatColor.RED + "That command can only be executed by players with the right permission!");
+						sender.sendMessage(plugin.addPrefix(ChatColor.RED + "That command can only be executed by players with the right permission!"));
 						return true;
 					}
 
 					if (args.length - 1 < sub.minArguments()) {
-						sender.sendMessage(ChatColor.RED + "That command requires more arguments!");
-						sender.sendMessage(ChatColor.RED + "Usage: " + ChatColor.GRAY + "/" + label + " " + sub.usageMessage());
+						sender.sendMessage(plugin.addPrefix(ChatColor.RED + "That command requires more arguments!"));
+						sender.sendMessage(plugin.addPrefix(ChatColor.RED + "Usage: " + ChatColor.GRAY + "/" + label + " " + sub.usageMessage()));
 						return true;
 					}
 					if (args.length - 1 > sub.maxArguments()) {
-						sender.sendMessage(ChatColor.RED + "That command doesn't require that many arguments!");
-						sender.sendMessage(ChatColor.RED + "Usage: " + ChatColor.GRAY + "/" + label + " " + sub.usageMessage());
+						sender.sendMessage(plugin.addPrefix(ChatColor.RED + "That command doesn't require that many arguments!"));
+						sender.sendMessage(plugin.addPrefix(ChatColor.RED + "Usage: " + ChatColor.GRAY + "/" + label + " " + sub.usageMessage()));
 						return true;
 					}
 
@@ -86,8 +86,8 @@ public class TheWallsBaseCommand implements CommandExecutor {
 		}
 
 		// If we got down here, we didn't find anything
-		sender.sendMessage(ChatColor.RED + "The command you entered, " + ChatColor.GRAY + "/" + label + " " + args[0] + ChatColor.RED + ", isn't a valid command.");
-		sender.sendMessage(ChatColor.RED + "Try " + ChatColor.GRAY + "/" + label + " help" + ChatColor.RED + " to see a list of valid commands");
+		sender.sendMessage(plugin.addPrefix(ChatColor.RED + "The command you entered, " + ChatColor.GRAY + "/" + label + " " + args[0] + ChatColor.RED + ", isn't a valid command."));
+		sender.sendMessage(plugin.addPrefix(ChatColor.RED + "Try " + ChatColor.GRAY + "/" + label + " help" + ChatColor.RED + " to see a list of valid commands"));
 		return true;
 	}
 
@@ -138,15 +138,15 @@ public class TheWallsBaseCommand implements CommandExecutor {
 				for (TheWallsSubCommand sub : subCommands) {
 					for (String name : sub.names()) {
 						if (name.equalsIgnoreCase(args[0])) {
-							sender.sendMessage(ChatColor.AQUA + "That command is used as follows: " + ChatColor.GOLD + "/" + label + " " + sub.usageMessage());
+							sender.sendMessage(plugin.addPrefix(ChatColor.AQUA + "That command is used as follows: " + ChatColor.GOLD + "/" + label + " " + sub.usageMessage()));
 						}
 					}
 				}
 			} else {
-				sender.sendMessage(ChatColor.AQUA + "The following commands are available:");
+				sender.sendMessage(plugin.addPrefix(ChatColor.AQUA + "The following commands are available:"));
 				for (TheWallsSubCommand sub : subCommands) {
 					if (sub.isAdminCommand() && sender.hasPermission("thewalls.admin")) {
-						sender.sendMessage(ChatColor.GOLD + "/" + label + " " + sub.usageMessage() + ChatColor.GRAY + " - " + sub.description());
+						sender.sendMessage(plugin.addPrefix(ChatColor.GOLD + "/" + label + " " + sub.usageMessage() + ChatColor.GRAY + " - " + sub.description()));
 					}
 				}
 			}
