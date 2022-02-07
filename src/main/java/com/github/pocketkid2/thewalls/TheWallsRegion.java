@@ -42,7 +42,6 @@ public class TheWallsRegion implements ConfigurationSerializable {
 
 	// Converts this region into a WorldEdit region
 	public CuboidRegion getWorldEditRegion() {
-		return new CuboidRegion(BukkitAdapter.adapt(world), BukkitAdapter.asBlockVector(min.toLocation(world)),
-				BukkitAdapter.asBlockVector(max.toLocation(world)));
+		return new CuboidRegion(BukkitAdapter.adapt(world), BukkitAdapter.asBlockVector(min.toLocation(world)), BukkitAdapter.asBlockVector(max.toLocation(world)));
 	}
 }
