@@ -103,10 +103,12 @@ public class Arena implements ConfigurationSerializable {
 	}
 
 	public void checkStatus() {
-		if (joinSign != null && playerSign != null && arena != null && walls.size() > 0 && spawns.size() == 4) {
-			status = Status.READY;
-		} else {
-			status = Status.INCOMPLETE;
+		if (status == Status.READY || status == Status.INCOMPLETE) {
+			if (joinSign != null && playerSign != null && arena != null && walls.size() > 0 && spawns.size() > 1) {
+				status = Status.READY;
+			} else {
+				status = Status.INCOMPLETE;
+			}
 		}
 	}
 

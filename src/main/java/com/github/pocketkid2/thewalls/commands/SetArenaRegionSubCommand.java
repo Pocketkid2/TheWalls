@@ -8,6 +8,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.github.pocketkid2.thewalls.Arena;
+import com.github.pocketkid2.thewalls.Status;
 import com.github.pocketkid2.thewalls.TheWallsPlugin;
 import com.github.pocketkid2.thewalls.TheWallsRegion;
 import com.sk89q.worldedit.IncompleteRegionException;
@@ -63,6 +64,10 @@ public class SetArenaRegionSubCommand extends TheWallsSubCommand {
 		Arena arena = plugin.getGM().getArenaByName(args[0]);
 		if (arena == null) {
 			player.sendMessage(plugin.addPrefix(ChatColor.RED + "The arena " + ChatColor.GRAY + args[0] + ChatColor.RED + " does not exist!"));
+			return;
+		}
+		if ((arena.getStatus() != Status.INCOMPLETE) && (arena.getStatus() != Status.READY)) {
+			player.sendMessage(plugin.addPrefix(ChatColor.RED + "Please wait till the game is finished to modify it's values"));
 			return;
 		}
 		LocalSession session = WorldEdit.getInstance().getSessionManager().getIfPresent(BukkitAdapter.adapt(player));

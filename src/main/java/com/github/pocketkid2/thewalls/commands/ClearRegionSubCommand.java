@@ -7,6 +7,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
 import com.github.pocketkid2.thewalls.Arena;
+import com.github.pocketkid2.thewalls.Status;
 import com.github.pocketkid2.thewalls.TheWallsPlugin;
 
 public class ClearRegionSubCommand extends TheWallsSubCommand {
@@ -55,6 +56,10 @@ public class ClearRegionSubCommand extends TheWallsSubCommand {
 		Arena arena = plugin.getGM().getArenaByName(args[0]);
 		if (arena == null) {
 			sender.sendMessage(plugin.addPrefix(ChatColor.RED + "The arena " + ChatColor.GRAY + args[0] + ChatColor.RED + " does not exist!"));
+			return;
+		}
+		if (arena.getStatus() != Status.INCOMPLETE && arena.getStatus() != Status.READY) {
+			sender.sendMessage(plugin.addPrefix(ChatColor.RED + "Please wait till the game is finished to modify it's values"));
 			return;
 		}
 		arena.clearWallRegions();
