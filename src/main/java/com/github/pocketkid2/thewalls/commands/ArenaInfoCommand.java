@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 import com.github.pocketkid2.thewalls.Arena;
 import com.github.pocketkid2.thewalls.TheWallsPlugin;
@@ -66,8 +67,12 @@ public class ArenaInfoCommand extends TheWallsSubCommand {
 		sender.sendMessage(
 				plugin.addPrefix(ChatColor.AQUA + "Player Sign: " + (arena.getPlayerSign() == null ? ChatColor.RED + "null" : ChatColor.GOLD + TheWallsUtils.printLoc(arena.getPlayerSign()))));
 		sender.sendMessage(plugin.addPrefix(ChatColor.AQUA + "Arena region: " + (arena.getArenaRegion() == null ? ChatColor.RED + "null" : ChatColor.GOLD + arena.getArenaRegion().toString())));
-		sender.sendMessage(
-				plugin.addPrefix(ChatColor.AQUA + "Wall regions: " + ChatColor.GOLD + String.join(", ", arena.getWallRegions().stream().map(TheWallsRegion::toString).collect(Collectors.toList()))));
+		sender.sendMessage(plugin.addPrefix(ChatColor.AQUA + "Wall regions: " + ChatColor.GOLD
+				+ String.join(ChatColor.AQUA + ", " + ChatColor.GOLD, arena.getWallRegions().stream().map(TheWallsRegion::toString).collect(Collectors.toList()))));
+		sender.sendMessage(plugin.addPrefix(ChatColor.AQUA + "Spawn locations: " + ChatColor.GOLD
+				+ String.join(ChatColor.AQUA + ", " + ChatColor.GOLD, arena.getSpawnLocations().stream().map(TheWallsUtils::printLoc).collect(Collectors.toList()))));
+		sender.sendMessage(plugin.addPrefix(ChatColor.AQUA + "Current players: " + ChatColor.GOLD
+				+ String.join(ChatColor.AQUA + ", " + ChatColor.GOLD, arena.getPlayers().stream().map(Player::getDisplayName).collect(Collectors.toList()))));
 	}
 
 }
