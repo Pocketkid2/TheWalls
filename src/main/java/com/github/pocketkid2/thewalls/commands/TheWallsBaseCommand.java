@@ -31,6 +31,10 @@ public class TheWallsBaseCommand implements CommandExecutor {
 		subCommands.add(new SetLobbySpawnSubCommand(p));
 		subCommands.add(new SetArenaJoinSignSubCommand(p));
 		subCommands.add(new SetArenaPlayerSignSubCommand(p));
+		subCommands.add(new SetArenaRegionSubCommand(p));
+		subCommands.add(new AddArenaWallSubCommand(p));
+		subCommands.add(new ClearRegionSubCommand(p));
+		subCommands.add(new ClearWallsSubCommand(p));
 		subCommands.add(new TeleportSubCommand(p));
 
 		subCommands.add(new HelpSubCommand(p));
@@ -39,8 +43,6 @@ public class TheWallsBaseCommand implements CommandExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		if (args.length <= 0) {
-			// If the command is run empty, show basic information and stats about the
-			// plugin
 			PluginDescriptionFile pdf = plugin.getDescription();
 			sender.sendMessage(ChatColor.AQUA + "This server is running " + ChatColor.GOLD + pdf.getName() + ChatColor.AQUA + " version " + ChatColor.GOLD + pdf.getVersion());
 			sender.sendMessage(ChatColor.AQUA + "There are " + ChatColor.YELLOW + plugin.getGM().getArenas().size() + ChatColor.AQUA + " arenas, with " + ChatColor.YELLOW
@@ -52,12 +54,10 @@ public class TheWallsBaseCommand implements CommandExecutor {
 		for (TheWallsSubCommand sub : subCommands) {
 			for (String name : sub.names()) {
 				if (name.equalsIgnoreCase(args[0])) {
-					// If we found a matching subcommand, do the checks and execute
 					if (sub.mustBePlayer() && !(sender instanceof Player)) {
 						sender.sendMessage(plugin.addPrefix(ChatColor.RED + "That command can only be executed by players!"));
 						return true;
 					}
-
 					if (sub.isAdminCommand() && !sender.hasPermission("thewalls.admin")) {
 						sender.sendMessage(plugin.addPrefix(ChatColor.RED + "That command can only be executed by admins with the right permission!"));
 						return true;
@@ -66,7 +66,6 @@ public class TheWallsBaseCommand implements CommandExecutor {
 						sender.sendMessage(plugin.addPrefix(ChatColor.RED + "That command can only be executed by players with the right permission!"));
 						return true;
 					}
-
 					if (args.length - 1 < sub.minArguments()) {
 						sender.sendMessage(plugin.addPrefix(ChatColor.RED + "That command requires more arguments!"));
 						sender.sendMessage(plugin.addPrefix(ChatColor.RED + "Usage: " + ChatColor.GRAY + "/" + label + " " + sub.usageMessage()));
@@ -77,15 +76,12 @@ public class TheWallsBaseCommand implements CommandExecutor {
 						sender.sendMessage(plugin.addPrefix(ChatColor.RED + "Usage: " + ChatColor.GRAY + "/" + label + " " + sub.usageMessage()));
 						return true;
 					}
-
 					sub.execute(sender, label, Arrays.copyOfRange(args, 1, args.length));
-
 					return true;
 				}
 			}
 		}
 
-		// If we got down here, we didn't find anything
 		sender.sendMessage(plugin.addPrefix(ChatColor.RED + "The command you entered, " + ChatColor.GRAY + "/" + label + " " + args[0] + ChatColor.RED + ", isn't a valid command."));
 		sender.sendMessage(plugin.addPrefix(ChatColor.RED + "Try " + ChatColor.GRAY + "/" + label + " help" + ChatColor.RED + " to see a list of valid commands"));
 		return true;
