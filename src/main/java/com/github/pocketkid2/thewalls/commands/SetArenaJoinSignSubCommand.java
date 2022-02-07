@@ -57,6 +57,11 @@ public class SetArenaJoinSignSubCommand extends TheWallsSubCommand {
 	@Override
 	public void execute(CommandSender sender, String label, String[] args) {
 		Player player = (Player) sender;
+		Arena arena = plugin.getGM().getArenaByName(args[0]);
+		if (arena == null) {
+			player.sendMessage(plugin.addPrefix(ChatColor.RED + "The arena " + ChatColor.GRAY + args[0] + ChatColor.RED + " does not exist!"));
+			return;
+		}
 		Block b = player.getTargetBlockExact(5);
 		if (b == null) {
 			player.sendMessage(plugin.addPrefix(ChatColor.RED + "Please get closer to your target join sign!"));
@@ -66,13 +71,8 @@ public class SetArenaJoinSignSubCommand extends TheWallsSubCommand {
 			player.sendMessage(plugin.addPrefix(ChatColor.RED + "You need to be looking at a sign!"));
 			return;
 		}
-		Arena a = plugin.getGM().getArenaByName(args[0]);
-		if (a == null) {
-			player.sendMessage(plugin.addPrefix(ChatColor.RED + "The arena " + ChatColor.GRAY + args[0] + ChatColor.RED + " does not exist!"));
-			return;
-		}
-		a.setJoinSign(b.getLocation());
-		player.sendMessage(plugin.addPrefix(ChatColor.AQUA + "The sign you have targeted is now the join sign for arena " + ChatColor.GREEN + a.getName()));
+		arena.setJoinSign(b.getLocation());
+		player.sendMessage(plugin.addPrefix(ChatColor.AQUA + "The sign you have targeted is now the join sign for arena " + ChatColor.GREEN + arena.getName()));
 	}
 
 }
