@@ -44,4 +44,10 @@ public class TheWallsRegion implements ConfigurationSerializable {
 	public CuboidRegion getWorldEditRegion() {
 		return new CuboidRegion(BukkitAdapter.adapt(world), BukkitAdapter.asBlockVector(min.toLocation(world)), BukkitAdapter.asBlockVector(max.toLocation(world)));
 	}
+
+	@Override
+	public String toString() {
+		return String.format("{max = (%d, %d, %d), min = (%d, %d, %d), world = %s}", max.getBlockX(), max.getBlockY(), max.getBlockZ(), min.getBlockX(), min.getBlockY(), min.getBlockZ(),
+				world.getName());
+	}
 }

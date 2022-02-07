@@ -5,14 +5,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.github.pocketkid2.thewalls.Arena;
 import com.github.pocketkid2.thewalls.TheWallsPlugin;
-
-import net.md_5.bungee.api.ChatColor;
 
 public class TeleportSubCommand extends TheWallsSubCommand {
 

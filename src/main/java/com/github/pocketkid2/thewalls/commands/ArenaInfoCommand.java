@@ -2,14 +2,15 @@ package com.github.pocketkid2.thewalls.commands;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
 import com.github.pocketkid2.thewalls.Arena;
 import com.github.pocketkid2.thewalls.TheWallsPlugin;
-import com.github.pocketkid2.thewalls.Utils;
-
-import net.md_5.bungee.api.ChatColor;
+import com.github.pocketkid2.thewalls.TheWallsRegion;
+import com.github.pocketkid2.thewalls.TheWallsUtils;
 
 public class ArenaInfoCommand extends TheWallsSubCommand {
 
@@ -61,9 +62,12 @@ public class ArenaInfoCommand extends TheWallsSubCommand {
 		}
 		sender.sendMessage(plugin.addPrefix(ChatColor.AQUA + "Showing information for arena " + ChatColor.GREEN + arena.getName()));
 		sender.sendMessage(plugin.addPrefix(ChatColor.AQUA + "Status: " + ChatColor.BLUE + arena.getStatus().toString()));
-		sender.sendMessage(plugin.addPrefix(ChatColor.AQUA + "Join Sign: " + (arena.getJoinSign() == null ? ChatColor.RED + "null" : ChatColor.GOLD + Utils.printLoc(arena.getJoinSign()))));
-		sender.sendMessage(plugin.addPrefix(ChatColor.AQUA + "Player Sign: " + (arena.getPlayerSign() == null ? ChatColor.RED + "null" : ChatColor.GOLD + Utils.printLoc(arena.getPlayerSign()))));
-
+		sender.sendMessage(plugin.addPrefix(ChatColor.AQUA + "Join Sign: " + (arena.getJoinSign() == null ? ChatColor.RED + "null" : ChatColor.GOLD + TheWallsUtils.printLoc(arena.getJoinSign()))));
+		sender.sendMessage(
+				plugin.addPrefix(ChatColor.AQUA + "Player Sign: " + (arena.getPlayerSign() == null ? ChatColor.RED + "null" : ChatColor.GOLD + TheWallsUtils.printLoc(arena.getPlayerSign()))));
+		sender.sendMessage(plugin.addPrefix(ChatColor.AQUA + "Arena region: " + (arena.getArenaRegion() == null ? ChatColor.RED + "null" : ChatColor.GOLD + arena.getArenaRegion().toString())));
+		sender.sendMessage(
+				plugin.addPrefix(ChatColor.AQUA + "Wall regions: " + ChatColor.GOLD + String.join(", ", arena.getWallRegions().stream().map(TheWallsRegion::toString).collect(Collectors.toList()))));
 	}
 
 }

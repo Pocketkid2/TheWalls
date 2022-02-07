@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 import org.bukkit.Location;
 import org.bukkit.Material;
 
-public class Utils {
+public class TheWallsUtils {
 	public static final List<Material> SIGN_TYPES = Arrays.asList(Material.values()).stream().filter(m -> m.toString().contains("SIGN")).collect(Collectors.toList());
 
 	public static String printLoc(Location joinSign) {

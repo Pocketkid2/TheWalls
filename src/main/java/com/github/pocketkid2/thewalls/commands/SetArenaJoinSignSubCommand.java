@@ -3,15 +3,14 @@ package com.github.pocketkid2.thewalls.commands;
 import java.util.Arrays;
 import java.util.List;
 
+import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.github.pocketkid2.thewalls.Arena;
 import com.github.pocketkid2.thewalls.TheWallsPlugin;
-import com.github.pocketkid2.thewalls.Utils;
-
-import net.md_5.bungee.api.ChatColor;
+import com.github.pocketkid2.thewalls.TheWallsUtils;
 
 public class SetArenaJoinSignSubCommand extends TheWallsSubCommand {
 
@@ -67,7 +66,7 @@ public class SetArenaJoinSignSubCommand extends TheWallsSubCommand {
 			player.sendMessage(plugin.addPrefix(ChatColor.RED + "Please get closer to your target join sign!"));
 			return;
 		}
-		if (Utils.SIGN_TYPES.contains(b.getType())) {
+		if (TheWallsUtils.SIGN_TYPES.contains(b.getType())) {
 			player.sendMessage(plugin.addPrefix(ChatColor.RED + "You need to be looking at a sign!"));
 			return;
 		}
