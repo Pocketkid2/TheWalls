@@ -25,9 +25,9 @@ public class Arena implements ConfigurationSerializable {
 	private Location joinSign;
 	private Location playerSign;
 
-	private Region arena;
+	private TheWallsRegion arena;
 
-	private List<Region> walls;
+	private List<TheWallsRegion> walls;
 
 	private List<Location> spawns;
 
@@ -45,7 +45,7 @@ public class Arena implements ConfigurationSerializable {
 
 		arena = null;
 
-		walls = new ArrayList<Region>();
+		walls = new ArrayList<TheWallsRegion>();
 
 		spawns = new ArrayList<Location>();
 
@@ -64,11 +64,11 @@ public class Arena implements ConfigurationSerializable {
 		joinSign = (Location) map.get("join-sign");
 		playerSign = (Location) map.get("player-sign");
 
-		arena = (Region) map.get("arena-region");
+		arena = (TheWallsRegion) map.get("arena-region");
 
-		walls = (List<Region>) map.get("wall-regions");
+		walls = (List<TheWallsRegion>) map.get("wall-regions");
 		if (walls == null) {
-			walls = new ArrayList<Region>();
+			walls = new ArrayList<TheWallsRegion>();
 		}
 
 		spawns = (List<Location>) map.get("spawn-locations");
@@ -131,8 +131,8 @@ public class Arena implements ConfigurationSerializable {
 	}
 
 	public void setJoinSign(Location newLoc) {
-		checkStatus();
 		joinSign = newLoc;
+		checkStatus();
 	}
 
 	public Location getPlayerSign() {
@@ -140,31 +140,31 @@ public class Arena implements ConfigurationSerializable {
 	}
 
 	public void setPlayerSign(Location newLoc) {
-		checkStatus();
 		playerSign = newLoc;
+		checkStatus();
 	}
 
-	public Region getArenaRegion() {
+	public TheWallsRegion getArenaRegion() {
 		return arena;
 	}
 
-	public void setArenaRegion(Region newRegion) {
-		checkStatus();
+	public void setArenaRegion(TheWallsRegion newRegion) {
 		arena = newRegion;
+		checkStatus();
 	}
 
-	public List<Region> getWallRegions() {
+	public List<TheWallsRegion> getWallRegions() {
 		return walls;
 	}
 
-	public void addWallRegion(Region newRegion) {
-		checkStatus();
+	public void addWallRegion(TheWallsRegion newRegion) {
 		walls.add(newRegion);
+		checkStatus();
 	}
 
 	public void clearWallRegions() {
-		checkStatus();
 		walls.clear();
+		checkStatus();
 	}
 
 	public List<Location> getSpawnLocations() {
@@ -172,13 +172,13 @@ public class Arena implements ConfigurationSerializable {
 	}
 
 	public void addSpawnLocation(Location newLoc) {
-		checkStatus();
 		spawns.add(newLoc);
+		checkStatus();
 	}
 
 	public void clearSpawnLocations() {
-		checkStatus();
 		spawns.clear();
+		checkStatus();
 	}
 
 	public List<Player> getPlayers() {
