@@ -23,7 +23,7 @@ public class SetLobbySpawnSubCommand extends TheWallsSubCommand {
 
 	@Override
 	public List<String> names() {
-		return Arrays.asList("setlobbyspawn");
+		return Arrays.asList("setlobbyspawn", "ls");
 	}
 
 	@Override
@@ -48,13 +48,13 @@ public class SetLobbySpawnSubCommand extends TheWallsSubCommand {
 
 	@Override
 	public String usageMessage() {
-		return "setlobbyspawn";
+		return "setlobbyspawn/ls";
 	}
 
 	@Override
 	public void execute(CommandSender sender, String label, String[] args) {
 		Player player = (Player) sender;
 		plugin.setLobbySpawn(player.getLocation());
-		player.sendMessage(plugin.addPrefix(ChatColor.AQUA + "Set the lobby spawn to your current location!"));
+		player.sendMessage(plugin.addPrefix(ChatColor.AQUA + "The lobby spawn has been set to your current location!"));
 	}
 }
