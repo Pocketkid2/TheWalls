@@ -78,6 +78,8 @@ public class Arena implements ConfigurationSerializable {
 
 		players = new ArrayList<Player>();
 
+		status = Status.INCOMPLETE;
+
 		checkStatus();
 	}
 
@@ -103,8 +105,8 @@ public class Arena implements ConfigurationSerializable {
 	}
 
 	public void checkStatus() {
-		if (status == Status.READY || status == Status.INCOMPLETE) {
-			if (joinSign != null && playerSign != null && arena != null && walls.size() > 0 && spawns.size() > 1) {
+		if ((status == Status.READY) || (status == Status.INCOMPLETE)) {
+			if ((joinSign != null) && (playerSign != null) && (arena != null) && (walls.size() > 0) && (spawns.size() > 1)) {
 				status = Status.READY;
 			} else {
 				status = Status.INCOMPLETE;
