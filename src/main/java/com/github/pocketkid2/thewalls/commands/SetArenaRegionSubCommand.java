@@ -77,7 +77,7 @@ public class SetArenaRegionSubCommand extends TheWallsSubCommand {
 		}
 		try {
 			Region region = session.getSelection();
-			arena.setArenaRegion(new TheWallsRegion(region.getBoundingBox()));
+			arena.setArenaRegion(new TheWallsRegion(player.getWorld(), region.getBoundingBox()));
 			player.sendMessage(plugin.addPrefix(ChatColor.AQUA + "The cuboid region you have selected is now the arena region for " + ChatColor.GRAY + arena.getName()));
 		} catch (IncompleteRegionException e) {
 			player.sendMessage(plugin.addPrefix(ChatColor.RED + "You haven't selected a WorldEdit region!"));

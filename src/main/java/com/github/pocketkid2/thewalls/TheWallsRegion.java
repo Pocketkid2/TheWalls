@@ -18,8 +18,8 @@ public class TheWallsRegion implements ConfigurationSerializable {
 	private BlockVector max;
 
 	// Creates a region using the WorldEdit CuboidRegion class
-	public TheWallsRegion(CuboidRegion region) {
-		world = BukkitAdapter.adapt(region.getWorld());
+	public TheWallsRegion(World w, CuboidRegion region) {
+		world = w;
 		min = BukkitAdapter.adapt(world, region.getMinimumPoint()).toVector().toBlockVector();
 		max = BukkitAdapter.adapt(world, region.getMaximumPoint()).toVector().toBlockVector();
 	}
@@ -34,7 +34,7 @@ public class TheWallsRegion implements ConfigurationSerializable {
 	@Override
 	public Map<String, Object> serialize() {
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("world", world.toString());
+		map.put("world", world.getName());
 		map.put("min", min);
 		map.put("max", max);
 		return map;
