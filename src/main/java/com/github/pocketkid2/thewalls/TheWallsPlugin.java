@@ -13,7 +13,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.github.pocketkid2.thewalls.commands.TheWallsBaseCommand;
 import com.github.pocketkid2.thewalls.listeners.PlayerListener;
-import com.github.pocketkid2.thewalls.listeners.ServerListener;
 
 import net.md_5.bungee.api.ChatColor;
 
@@ -47,13 +46,14 @@ public class TheWallsPlugin extends JavaPlugin {
 		gm = new GameManager(this);
 
 		getServer().getPluginManager().registerEvents(new PlayerListener(this), this);
-		getServer().getPluginManager().registerEvents(new ServerListener(this), this);
 
 		log("Enabled!");
 	}
 
 	@Override
 	public void onDisable() {
+		gm.shutdown();
+
 		dataConfig.set("lobby-spawn-location", lobbySpawn);
 		dataConfig.set("arena-data", gm.getArenas());
 
