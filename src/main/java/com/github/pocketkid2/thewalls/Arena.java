@@ -6,10 +6,23 @@ import java.util.List;
 import java.util.Map;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
+
+import com.sk89q.worldedit.EditSession;
+import com.sk89q.worldedit.WorldEdit;
+import com.sk89q.worldedit.WorldEditException;
+import com.sk89q.worldedit.bukkit.BukkitAdapter;
+import com.sk89q.worldedit.extent.clipboard.BlockArrayClipboard;
+import com.sk89q.worldedit.function.operation.ForwardExtentCopy;
+import com.sk89q.worldedit.function.operation.Operation;
+import com.sk89q.worldedit.function.operation.Operations;
+import com.sk89q.worldedit.regions.CuboidRegion;
+import com.sk89q.worldedit.session.ClipboardHolder;
 
 public class Arena implements ConfigurationSerializable {
 
@@ -32,6 +45,8 @@ public class Arena implements ConfigurationSerializable {
 	private List<Location> spawns;
 
 	private List<Player> players;
+
+	private BlockArrayClipboard savedState;
 
 	// Initial constructor (when nothing but a name is given)
 	public Arena(TheWallsPlugin p, String n) {
@@ -196,6 +211,78 @@ public class Arena implements ConfigurationSerializable {
 	public void broadcast(String message) {
 		for (Player p : players) {
 			p.sendMessage(plugin.addPrefix(message));
+		}
+	}
+
+	public void endGame() {
+		if (status == Status.INGAME) {
+			// First change status
+			status = Status.RESETTING;
+
+			if (players.size() == 1) {
+				// We have a winner
+				plugin.broadcast(ChatColor.YELLOW + players.get(0).getDisplayName() + ChatColor.YELLOW + " won TheWalls in arena " + ChatColor.GOLD + name);
+			} else {
+				// Maybe we have to force stop?
+				plugin.broadcast(ChatColor.DARK_RED + "TheWalls arena " + ChatColor.GOLD + " was forced stopped with " + players.size() + " players");
+			}
+
+			// Schedule all players be reset
+			for (Player player : players) {
+				new BukkitRunnable() {
+					@Override
+					public void run() {
+						player.getInventory().clear();
+						player.setHealth(20);
+						player.setFoodLevel(20);
+						player.setExp(0);
+						player.setExhaustion(20);
+						player.teleport(plugin.getLobbySpawn());
+					}
+				}.runTask(plugin);
+			}
+
+			// Schedule the arena to reset
+			new BukkitRunnable() {
+				@Override
+				public void run() {
+					restoreState();
+				}
+			};
+
+			// Schedule the status to reset after a few seconds
+			new BukkitRunnable() {
+				@Override
+				public void run() {
+					status = Status.READY;
+				}
+			};
+		} else {
+			plugin.log("endGame() called on arena " + name + " that was not in game");
+		}
+	}
+
+	public void saveState() {
+		CuboidRegion region = arena.getWorldEditRegion();
+		savedState = new BlockArrayClipboard(region);
+		try (EditSession session = WorldEdit.getInstance().newEditSession(BukkitAdapter.adapt(arena.getWorld()))) {
+			ForwardExtentCopy extent = new ForwardExtentCopy(session, region, savedState, region.getMinimumPoint());
+			extent.setRemovingEntities(true);
+			Operations.complete(extent);
+		} catch (WorldEditException e) {
+			plugin.warn("WorldEdit ran into an exception while TheWalls was executing saveState():");
+			e.printStackTrace();
+		}
+	}
+
+	public void restoreState() {
+		CuboidRegion region = arena.getWorldEditRegion();
+		try (EditSession session = WorldEdit.getInstance().newEditSession(BukkitAdapter.adapt(arena.getWorld()))) {
+			Operation operation = new ClipboardHolder(savedState).createPaste(session).to(region.getMinimumPoint()).build();
+			Operations.complete(operation);
+		} catch (WorldEditException e) {
+			plugin.warn("WorldEdit ran into an exception while TheWalls was executing restoreState():");
+			e.printStackTrace();
 		}
 	}
 
