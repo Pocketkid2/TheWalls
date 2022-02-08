@@ -310,4 +310,8 @@ public class Arena implements ConfigurationSerializable {
 		players.add(player);
 	}
 
+	public void removePlayer(Player player) {
+		players.remove(player);
+	}
+
 }
