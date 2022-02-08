@@ -7,6 +7,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -52,6 +53,8 @@ public class PlayerListener implements Listener {
 			Player player = event.getEntity();
 			Arena arena = plugin.getGM().getArenaForPlayer(player);
 
+			event.setDeathMessage(plugin.addPrefix(ChatColor.GREEN + ChatColor.stripColor(event.getDeathMessage())));
+
 			new BukkitRunnable() {
 				@Override
 				public void run() {
@@ -63,7 +66,7 @@ public class PlayerListener implements Listener {
 					player.teleport(plugin.getLobbySpawn());
 					arena.removePlayer(player);
 					plugin.debug("Resetting player " + player.getName());
-					event.setDeathMessage(plugin.addPrefix(ChatColor.GREEN + ChatColor.stripColor(event.getDeathMessage())));
+
 					if (arena.getPlayers().size() > 1) {
 						arena.broadcast(ChatColor.RED + "" + arena.getPlayers().size() + ChatColor.DARK_RED + " players remaining!");
 					} else {
@@ -71,6 +74,36 @@ public class PlayerListener implements Listener {
 					}
 				}
 			}.runTask(plugin);
+		}
+	}
+
+	@EventHandler
+	public void onPlayerQuit(PlayerQuitEvent event) {
+		if (plugin.getGM().isInGame(event.getPlayer())) {
+			Player player = event.getPlayer();
+			Arena arena = plugin.getGM().getArenaForPlayer(player);
+
+			event.setQuitMessage(plugin.addPrefix(ChatColor.GREEN + player.getDisplayName() + " has left the server!"));
+
+			player.getInventory().clear();
+			player.setHealth(20);
+			player.setFoodLevel(20);
+			player.setExp(0);
+			player.setExhaustion(20);
+			player.teleport(plugin.getLobbySpawn());
+			arena.removePlayer(player);
+			plugin.debug("Resetting player " + player.getName());
+
+			new BukkitRunnable() {
+				@Override
+				public void run() {
+					if (arena.getPlayers().size() > 1) {
+						arena.broadcast(ChatColor.RED + "" + arena.getPlayers().size() + ChatColor.DARK_RED + " players remaining!");
+					} else {
+						arena.endGame();
+					}
+				}
+			};
 		}
 	}
 }
