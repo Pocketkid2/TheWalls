@@ -3,14 +3,13 @@ package com.github.pocketkid2.thewalls.commands;
 import java.util.Arrays;
 import java.util.List;
 
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import com.github.pocketkid2.thewalls.Arena;
 import com.github.pocketkid2.thewalls.TheWallsPlugin;
-
-import net.md_5.bungee.api.ChatColor;
 
 public class LeaveSubCommand extends TheWallsSubCommand {
 

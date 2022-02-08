@@ -8,12 +8,14 @@ import java.util.Map;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import com.github.pocketkid2.thewalls.tasks.StartGameTask;
 import com.sk89q.worldedit.EditSession;
 import com.sk89q.worldedit.WorldEdit;
 import com.sk89q.worldedit.WorldEditException;
@@ -50,6 +52,8 @@ public class Arena implements ConfigurationSerializable {
 
 	private BlockArrayClipboard savedState;
 
+	private List<Player> votes;
+
 	// Initial constructor (when nothing but a name is given)
 	public Arena(TheWallsPlugin p, String n) {
 		plugin = p;
@@ -67,6 +71,8 @@ public class Arena implements ConfigurationSerializable {
 		spawns = new ArrayList<Location>();
 
 		players = new ArrayList<Player>();
+
+		votes = new ArrayList<Player>();
 	}
 
 	//
@@ -96,6 +102,8 @@ public class Arena implements ConfigurationSerializable {
 		players = new ArrayList<Player>();
 
 		status = Status.INCOMPLETE;
+
+		votes = new ArrayList<Player>();
 
 		checkStatus();
 	}
@@ -312,6 +320,35 @@ public class Arena implements ConfigurationSerializable {
 
 	public void removePlayer(Player player) {
 		players.remove(player);
+	}
+
+	public boolean hasVoted(Player player) {
+		return votes.contains(player);
+	}
+
+	public void castVote(Player player) {
+		votes.add(player);
+		broadcast(ChatColor.AQUA + player.getDisplayName() + " has voted to start the game! (" + ChatColor.GOLD + votes.size() + ChatColor.AQUA + "/" + ChatColor.GOLD + players.size() + ChatColor.AQUA
+				+ ")");
+		if ((votes.size() == players.size()) && (players.size() > 1)) {
+			beginGame();
+		}
+	}
+
+	private void beginGame() {
+		votes.clear();
+		status = Status.STARTING;
+		plugin.broadcast(ChatColor.AQUA + "Arena " + ChatColor.GRAY + name + ChatColor.AQUA + " is beginning in " + ChatColor.BLUE + 10 + ChatColor.AQUA + " seconds!");
+		new StartGameTask(plugin, 10, this).runTaskTimer(plugin, 0, 20);
+
+	}
+
+	public void dropWalls() {
+		for (TheWallsRegion region : walls) {
+			for (BlockVector3 bv : region.getWorldEditRegion()) {
+				arena.getWorld().getBlockAt(bv.getX(), bv.getY(), bv.getZ()).setType(Material.AIR);
+			}
+		}
 	}
 
 }
