@@ -122,10 +122,16 @@ public class TheWallsPlugin extends JavaPlugin {
 
 	// Sends a message to all players not in a game
 	public void broadcastExcept(String message, Arena arena) {
-		for (Player p : getServer().getOnlinePlayers()) {
-			if (!arena.isPlayer(p)) {
-				p.sendMessage(addPrefix(message));
+		for (Player player : getServer().getOnlinePlayers()) {
+			if (!arena.isPlayer(player)) {
+				player.sendMessage(addPrefix(message));
 			}
+		}
+	}
+
+	public void broadcast(String message) {
+		for (Player player : getServer().getOnlinePlayers()) {
+			player.sendMessage(addPrefix(message));
 		}
 	}
 }
