@@ -47,4 +47,11 @@ public class GameManager {
 		}
 		return false;
 	}
+
+	// Force shuts down all games peacefully
+	public void shutdown() {
+		for (Arena arena : arenas) {
+			arena.endGame();
+		}
+	}
 }
