@@ -31,6 +31,8 @@ public class TheWallsPlugin extends JavaPlugin {
 	@Override
 	public void onEnable() {
 		ConfigurationSerialization.registerClass(Arena.class);
+		ConfigurationSerialization.registerClass(TheWallsRegion.class);
+
 		saveDefaultConfig();
 		createDataConfig();
 
