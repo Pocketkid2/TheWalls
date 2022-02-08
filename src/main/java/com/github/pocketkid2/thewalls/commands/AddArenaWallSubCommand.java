@@ -87,7 +87,7 @@ public class AddArenaWallSubCommand extends TheWallsSubCommand {
 				return;
 			}
 			arena.addWallRegion(new TheWallsRegion(wallRegion.getBoundingBox()));
-			player.sendMessage(plugin.addPrefix(ChatColor.AQUA + "The cuboid region you have selected is now the arena region for " + ChatColor.GRAY + arena.getName()));
+			player.sendMessage(plugin.addPrefix(ChatColor.AQUA + "The cuboid region you have selected has been added to the list of wall regions for " + ChatColor.GRAY + arena.getName()));
 		} catch (IncompleteRegionException e) {
 			player.sendMessage(plugin.addPrefix(ChatColor.RED + "You haven't selected a WorldEdit region!"));
 			return;
