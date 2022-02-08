@@ -238,6 +238,7 @@ public class Arena implements ConfigurationSerializable {
 						player.setExp(0);
 						player.setExhaustion(20);
 						player.teleport(plugin.getLobbySpawn());
+						players.remove(player);
 					}
 				}.runTask(plugin);
 			}
@@ -276,6 +277,10 @@ public class Arena implements ConfigurationSerializable {
 	}
 
 	public void restoreState() {
+		if (savedState == null) {
+			plugin.warn("Oh no, restoreState() is being called while there is no savedState!");
+			return;
+		}
 		CuboidRegion region = arena.getWorldEditRegion();
 		try (EditSession session = WorldEdit.getInstance().newEditSession(BukkitAdapter.adapt(arena.getWorld()))) {
 			Operation operation = new ClipboardHolder(savedState).createPaste(session).to(region.getMinimumPoint()).build();
