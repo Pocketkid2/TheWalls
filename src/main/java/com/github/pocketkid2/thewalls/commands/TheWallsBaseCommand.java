@@ -36,6 +36,7 @@ public class TheWallsBaseCommand implements CommandExecutor {
 		subCommands.add(new ClearRegionSubCommand(p));
 		subCommands.add(new ClearWallsSubCommand(p));
 		subCommands.add(new TeleportSubCommand(p));
+		subCommands.add(new ArenaInfoCommand(p));
 
 		subCommands.add(new HelpSubCommand(p));
 	}
@@ -66,12 +67,12 @@ public class TheWallsBaseCommand implements CommandExecutor {
 						sender.sendMessage(plugin.addPrefix(ChatColor.RED + "That command can only be executed by players with the right permission!"));
 						return true;
 					}
-					if (args.length - 1 < sub.minArguments()) {
+					if ((args.length - 1) < sub.minArguments()) {
 						sender.sendMessage(plugin.addPrefix(ChatColor.RED + "That command requires more arguments!"));
 						sender.sendMessage(plugin.addPrefix(ChatColor.RED + "Usage: " + ChatColor.GRAY + "/" + label + " " + sub.usageMessage()));
 						return true;
 					}
-					if (args.length - 1 > sub.maxArguments()) {
+					if ((args.length - 1) > sub.maxArguments()) {
 						sender.sendMessage(plugin.addPrefix(ChatColor.RED + "That command doesn't require that many arguments!"));
 						sender.sendMessage(plugin.addPrefix(ChatColor.RED + "Usage: " + ChatColor.GRAY + "/" + label + " " + sub.usageMessage()));
 						return true;
