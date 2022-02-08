@@ -8,6 +8,7 @@ import java.util.Map;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.block.Block;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.entity.Player;
@@ -21,6 +22,7 @@ import com.sk89q.worldedit.extent.clipboard.BlockArrayClipboard;
 import com.sk89q.worldedit.function.operation.ForwardExtentCopy;
 import com.sk89q.worldedit.function.operation.Operation;
 import com.sk89q.worldedit.function.operation.Operations;
+import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldedit.regions.CuboidRegion;
 import com.sk89q.worldedit.session.ClipboardHolder;
 
@@ -289,6 +291,14 @@ public class Arena implements ConfigurationSerializable {
 			plugin.warn("WorldEdit ran into an exception while TheWalls was executing restoreState():");
 			e.printStackTrace();
 		}
+	}
+
+	public boolean isProtected(Block block) {
+		for (TheWallsRegion region : walls) {
+			if (region.getWorldEditRegion().contains(BlockVector3.at(block.getX(), block.getY(), block.getZ())))
+				return true;
+		}
+		return false;
 	}
 
 }

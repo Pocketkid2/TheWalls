@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
 public class GameManager {
@@ -40,9 +41,17 @@ public class GameManager {
 		arenas = arenas.stream().filter(a -> !a.getName().equalsIgnoreCase(name)).collect(Collectors.toList());
 	}
 
+	public Arena getArenaForPlayer(Player player) {
+		for (Arena arena : arenas) {
+			if (arena.isPlayer(player))
+				return arena;
+		}
+		return null;
+	}
+
 	public boolean isInGame(Player player) {
-		for (Arena a : arenas) {
-			if (a.isPlayer(player))
+		for (Arena arena : arenas) {
+			if (arena.isPlayer(player))
 				return true;
 		}
 		return false;
@@ -53,5 +62,13 @@ public class GameManager {
 		for (Arena arena : arenas) {
 			arena.endGame();
 		}
+	}
+
+	public boolean isProtected(Block block) {
+		for (Arena arena : arenas) {
+			if (arena.isProtected(block))
+				return true;
+		}
+		return false;
 	}
 }
