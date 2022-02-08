@@ -4,8 +4,11 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
+import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import com.github.pocketkid2.thewalls.Arena;
 import com.github.pocketkid2.thewalls.TheWallsPlugin;
@@ -74,6 +77,29 @@ public class JoinSubCommand extends TheWallsSubCommand {
 					break;
 				case READY:
 				case STARTING:
+					Location spawn;
+					try {
+						spawn = arena.getSpawnLocations().get(arena.getPlayers().size());
+					} catch (IndexOutOfBoundsException e) {
+						player.sendMessage(plugin.addPrefix(ChatColor.RED + "That game is full!"));
+						return;
+					}
+
+					// Schedule player join event
+					new BukkitRunnable() {
+						@Override
+						public void run() {
+							player.getInventory().clear();
+							player.setHealth(20);
+							player.setFoodLevel(20);
+							player.setExp(0);
+							player.setExhaustion(20);
+							player.setGameMode(GameMode.SURVIVAL);
+							player.teleport(spawn);
+							arena.addPlayer(player);
+							arena.broadcast(ChatColor.GREEN + player.getDisplayName() + ChatColor.AQUA + " has joined the game! (" + ChatColor.GOLD + arena.getPlayers().size() + ChatColor.AQUA + ")");
+						}
+					}.runTask(plugin);
 					break;
 				default:
 					break;

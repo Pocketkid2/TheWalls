@@ -217,6 +217,7 @@ public class Arena implements ConfigurationSerializable {
 	}
 
 	public void endGame() {
+		plugin.debug("endGame() was called on arena " + name + " with status " + status.toString() + " with player count " + players.size());
 		if (status == Status.INGAME) {
 			// First change status
 			status = Status.RESETTING;
@@ -241,6 +242,7 @@ public class Arena implements ConfigurationSerializable {
 						player.setExhaustion(20);
 						player.teleport(plugin.getLobbySpawn());
 						players.remove(player);
+						plugin.debug("Resetting player " + player.getName());
 					}
 				}.runTask(plugin);
 			}
@@ -250,16 +252,19 @@ public class Arena implements ConfigurationSerializable {
 				@Override
 				public void run() {
 					restoreState();
+					plugin.debug("Resetting arena");
 				}
-			};
+			}.runTask(plugin);
 
 			// Schedule the status to reset after a few seconds
 			new BukkitRunnable() {
 				@Override
 				public void run() {
 					status = Status.READY;
+					checkStatus();
+					plugin.debug("Reset arena status");
 				}
-			};
+			}.runTask(plugin);
 		} else {
 			plugin.log("endGame() called on arena " + name + " that was not in game");
 		}
@@ -299,6 +304,10 @@ public class Arena implements ConfigurationSerializable {
 				return true;
 		}
 		return false;
+	}
+
+	public void addPlayer(Player player) {
+		players.add(player);
 	}
 
 }
