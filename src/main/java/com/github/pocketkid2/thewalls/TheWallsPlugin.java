@@ -42,7 +42,7 @@ public class TheWallsPlugin extends JavaPlugin {
 		getCommand("thewalls").setExecutor(new TheWallsBaseCommand(this));
 
 		lobbySpawn = dataConfig.getSerializable("lobby-spawn-location", Location.class);
-		debug("Lobby spawn loaded as " + (lobbySpawn == null ? "null" : lobbySpawn.toString()));
+		debug("Lobby spawn loaded as " + (lobbySpawn == null ? "null" : TheWallsUtils.printLoc(lobbySpawn)));
 
 		gm = new GameManager(this);
 
