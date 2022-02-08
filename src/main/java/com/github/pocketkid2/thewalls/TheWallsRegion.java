@@ -50,4 +50,8 @@ public class TheWallsRegion implements ConfigurationSerializable {
 		return String.format("{max = (%d, %d, %d), min = (%d, %d, %d), world = %s}", max.getBlockX(), max.getBlockY(), max.getBlockZ(), min.getBlockX(), min.getBlockY(), min.getBlockZ(),
 				world.getName());
 	}
+
+	public World getWorld() {
+		return world;
+	}
 }

@@ -77,7 +77,6 @@ public class JoinSubCommand extends TheWallsSubCommand {
 					break;
 				default:
 					break;
-
 				}
 			}
 		}
