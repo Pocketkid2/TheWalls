@@ -33,8 +33,10 @@ public class TheWallsBaseCommand implements CommandExecutor {
 		subCommands.add(new SetArenaPlayerSignSubCommand(p));
 		subCommands.add(new SetArenaRegionSubCommand(p));
 		subCommands.add(new AddArenaWallSubCommand(p));
+		subCommands.add(new AddArenaSpawnSubCommand(p));
 		subCommands.add(new ClearRegionSubCommand(p));
 		subCommands.add(new ClearWallsSubCommand(p));
+		subCommands.add(new ClearSpawnsSubCommand(p));
 		subCommands.add(new TeleportSubCommand(p));
 		subCommands.add(new ArenaInfoCommand(p));
 
